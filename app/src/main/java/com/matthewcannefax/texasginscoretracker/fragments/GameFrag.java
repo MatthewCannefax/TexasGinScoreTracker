@@ -1,6 +1,8 @@
 package com.matthewcannefax.texasginscoretracker.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.matthewcannefax.texasginscoretracker.MainActivity;
@@ -92,6 +95,26 @@ public class GameFrag extends Fragment {
             isRoundOver = true;
             btNextRound.setText(rootView.getContext().getString(R.string.next_round));
             setRvCurrentPlayerScoresAdapter(rootView, isRoundOver);
+            for (int i = 0; i < players.size(); i++) {
+                final int playerIndex = i;
+                AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext())
+                        .setTitle(rootView.getContext().getString(R.string.player_score, players.get(i).getName()));
+
+                View playerScoreView = LayoutInflater.from(rootView.getContext()).inflate(R.layout.enter_score_layout,
+                        (ViewGroup)rootView.findViewById(android.R.id.content), false);
+
+                final EditText etRoundScore = playerScoreView.findViewById(R.id.player_score_edittext);
+
+                builder.setView(playerScoreView)
+                        .setNegativeButton("Cancel", null)
+                        .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int clickI) {
+                                players.get(playerIndex).addRoundScore(Integer.parseInt(etRoundScore.getText().toString()));
+                            }
+                        });
+                builder.show();
+            }
         }else {
             isRoundOver = false;
             mCurrentRound = WildRound.getRound(mCurrentRound.getRoundNumber() + 1);

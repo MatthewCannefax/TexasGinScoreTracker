@@ -15,4 +15,7 @@
     <string name="current_round_string">%s\'s are wild!!</string>
     <string name="next_round">Next Round</string>
     <string name="round_over">Round Over</string>
+    <string name="total_score">Total Score: %s</string>
+    <string name="player_score">%s\'s score</string>
+    <string name="enter_player_score">Enter %s\'s score</string>
 </resources>

@@ -1,11 +1,9 @@
 package com.matthewcannefax.texasginscoretracker.adapters;
 
 import android.content.Context;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,13 +41,7 @@ public class PlayerScoreRecyclerAdapter extends RecyclerView.Adapter<PlayerScore
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
         Player currentPlayer = mPlayerList.get(position);
         holder.tvPlayerName.setText(currentPlayer.getName());
-        holder.etRoundScore.setEnabled(mEditTextsEnabled);
-//        holder.btWinner.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
+        holder.tvTotalScore.setText(mContext.getString(R.string.total_score, Integer.toString(currentPlayer.getTotalScore())));
     }
 
     @Override
@@ -60,14 +52,14 @@ public class PlayerScoreRecyclerAdapter extends RecyclerView.Adapter<PlayerScore
     class PlayerViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvPlayerName;
-        EditText etRoundScore;
+        TextView tvTotalScore;
 //        Button btWinner;
 
         public PlayerViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvPlayerName = itemView.findViewById(R.id.player_name_textview);
-            etRoundScore = itemView.findViewById(R.id.player_score_edittext);
+            tvTotalScore = itemView.findViewById(R.id.player_score_textview);
 //            btWinner = itemView.findViewById(R.id.winner_button);
         }
     }

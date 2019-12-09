@@ -6,11 +6,11 @@ import java.util.Map;
 
 public class Player {
     private String mName;
-    private HashMap<WildRound, Integer> mRoundScores;
-    private WildRound mCurrentRound;
+    private ArrayList<Integer> mRoundScores;
 
     public Player(String name){
         mName = name;
+        mRoundScores = new ArrayList<>();
     }
 
     public void setName(String name){
@@ -20,35 +20,18 @@ public class Player {
         return mName;
     }
 
-    public void setRoundScore(int score){
-        if(mRoundScores == null){
-            mRoundScores = new HashMap<>();
-            mRoundScores.put(WildRound.ACE, score);
-            mCurrentRound = WildRound.ACE;
-        }else if(mRoundScores.size() == 0){
-            mRoundScores.put(WildRound.ACE, score);
-            mCurrentRound = WildRound.ACE;
-        }else {
-            int currentRoundNum = mCurrentRound.getRoundNumber() + 1;
-            mCurrentRound = WildRound.getRound(currentRoundNum);
-            mRoundScores.put(mCurrentRound, score);
-        }
+
+    public void addRoundScore(int roundScore){
+        mRoundScores.add(roundScore);
     }
 
-    public HashMap<WildRound, Integer> getRoundScores(){
-        if(mRoundScores == null){
-            mRoundScores = new HashMap<>();
-        }
-
-        return mRoundScores;
-    }
 
     public int getTotalScore(){
-        int total = 0;
-        for (int score :
-                mRoundScores.values()) {
-            total += score;
+        int totalScore = 0;
+        for (int n :
+                mRoundScores) {
+            totalScore += n;
         }
-        return total;
+        return totalScore;
     }
 }
