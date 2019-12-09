@@ -63,6 +63,7 @@ public class AddPlayersFrag extends Fragment {
             public void onClick(View view) {
                 if(!etNewPlayer.getText().equals("") && etNewPlayer.getText() != null){
                     players.add(new Player(etNewPlayer.getText().toString()));
+                    etNewPlayer.setText("");
                     AddedPlayersRecyclerAdapter adapter = new AddedPlayersRecyclerAdapter(rootView.getContext(), players);
                     rvCurrentPlayers.setAdapter(adapter);
                     rvCurrentPlayers.setLayoutManager(new LinearLayoutManager(rootView.getContext()));

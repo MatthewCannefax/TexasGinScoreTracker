@@ -1,10 +1,10 @@
 package com.matthewcannefax.texasginscoretracker.model;
 
 public enum WildRound {
-    ACE("A", 1),
-    KING("K", 2),
-    QUEEN("Q", 3),
-    JACK("J", 4),
+    ACE("Ace", 1),
+    KING("King", 2),
+    QUEEN("Queen", 3),
+    JACK("Jack", 4),
     TEN("10", 5),
     NINE("9", 6),
     EIGHT("8", 7),

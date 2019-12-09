@@ -1,13 +1,12 @@
 package com.matthewcannefax.texasginscoretracker.adapters;
 
 import android.content.Context;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,11 +21,13 @@ public class PlayerScoreRecyclerAdapter extends RecyclerView.Adapter<PlayerScore
     private List<Player> mPlayerList;
     private Context mContext;
     private LayoutInflater mInflater;
+    private boolean mEditTextsEnabled;
 
-    public PlayerScoreRecyclerAdapter(Context context, List<Player> playerList){
+    public PlayerScoreRecyclerAdapter(Context context, List<Player> playerList, boolean enableEditTexts){
         mPlayerList = playerList;
         mContext = context;
         mInflater = LayoutInflater.from(context);
+        mEditTextsEnabled = enableEditTexts;
     }
 
 
@@ -42,12 +43,13 @@ public class PlayerScoreRecyclerAdapter extends RecyclerView.Adapter<PlayerScore
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
         Player currentPlayer = mPlayerList.get(position);
         holder.tvPlayerName.setText(currentPlayer.getName());
-        holder.btWinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        holder.etRoundScore.setEnabled(mEditTextsEnabled);
+//        holder.btWinner.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -59,14 +61,14 @@ public class PlayerScoreRecyclerAdapter extends RecyclerView.Adapter<PlayerScore
 
         TextView tvPlayerName;
         EditText etRoundScore;
-        Button btWinner;
+//        Button btWinner;
 
         public PlayerViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvPlayerName = itemView.findViewById(R.id.player_name_textview);
             etRoundScore = itemView.findViewById(R.id.player_score_edittext);
-            btWinner = itemView.findViewById(R.id.winner_button);
+//            btWinner = itemView.findViewById(R.id.winner_button);
         }
     }
 }

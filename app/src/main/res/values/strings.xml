@@ -9,7 +9,10 @@
     <string name="new_player">New Player</string>
     <string name="add">ADD</string>
     <string name="start_game">Start Game</string>
-    <string name="winner">Winner!</string>
+    <string name="winner">Win</string>
     <string name="score">score</string>
     <string name="congrats">Congratulations %s!!</string>
+    <string name="current_round_string">%s\'s are wild!!</string>
+    <string name="next_round">Next Round</string>
+    <string name="round_over">Round Over</string>
 </resources>
