@@ -32,7 +32,7 @@ public class AddPlayersFrag extends Fragment {
     private Button btAdd;
     private Button btStart;
 
-    private ArrayList<Player> players;
+//    private ArrayList<Player> players;
 
     private FragmentManager fragmentManager;
 
@@ -44,7 +44,20 @@ public class AddPlayersFrag extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        players = new ArrayList<>();
+//        players = new ArrayList<>();
+        MainActivity.mCurrentFragment = MainActivity.ADD_PLAYERS_FRAG_KEY;
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(MainActivity.mPlayers.size() != 0){
+            AddedPlayersRecyclerAdapter adapter = new AddedPlayersRecyclerAdapter(MainActivity.mContext, MainActivity.mPlayers);
+            rvCurrentPlayers.setAdapter(adapter);
+            rvCurrentPlayers.setLayoutManager(new LinearLayoutManager(MainActivity.mContext));
+        }
     }
 
     @Override
@@ -62,9 +75,9 @@ public class AddPlayersFrag extends Fragment {
             @Override
             public void onClick(View view) {
                 if(!etNewPlayer.getText().equals("") && etNewPlayer.getText() != null){
-                    players.add(new Player(etNewPlayer.getText().toString()));
+                    MainActivity.mPlayers.add(new Player(etNewPlayer.getText().toString()));
                     etNewPlayer.setText("");
-                    AddedPlayersRecyclerAdapter adapter = new AddedPlayersRecyclerAdapter(rootView.getContext(), players);
+                    AddedPlayersRecyclerAdapter adapter = new AddedPlayersRecyclerAdapter(rootView.getContext(), MainActivity.mPlayers);
                     rvCurrentPlayers.setAdapter(adapter);
                     rvCurrentPlayers.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
                 }
@@ -74,7 +87,7 @@ public class AddPlayersFrag extends Fragment {
         btStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameFrag fragment = GameFrag.newInstance(players);
+                GameFrag fragment = GameFrag.newInstance();
                 fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.main_frame, fragment)

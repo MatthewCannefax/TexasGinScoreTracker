@@ -61,6 +61,8 @@ public class GameFrag extends Fragment {
             }
 
         }
+
+        MainActivity.mCurrentFragment = MainActivity.GAME_FRAG_KEY;
     }
 
     @Override
@@ -134,10 +136,10 @@ public class GameFrag extends Fragment {
         tvCurrentRound.setText(rootView.getContext().getString(R.string.current_round_string, mCurrentRound));
     }
 
-    public static GameFrag newInstance(ArrayList<Player> newPlayers){
+    public static GameFrag newInstance(){
         ArrayList<String> playerNames = new ArrayList<>();
         for (Player p :
-                newPlayers) {
+                MainActivity.mPlayers) {
             playerNames.add(p.getName());
         }
 

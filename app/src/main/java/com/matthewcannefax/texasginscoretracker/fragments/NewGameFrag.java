@@ -44,6 +44,8 @@ public class NewGameFrag extends Fragment {
 //            mWinnerName = (String)getArguments().get(MainActivity.WINNER_NAME_KEY);
 //
 //        }
+
+        MainActivity.mCurrentFragment = MainActivity.NEW_GAME_FRAG_KEY;
     }
 
     @Override
