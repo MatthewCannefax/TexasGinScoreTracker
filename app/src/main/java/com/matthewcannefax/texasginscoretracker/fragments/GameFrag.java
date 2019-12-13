@@ -118,13 +118,33 @@ public class GameFrag extends Fragment {
                 builder.show();
             }
         }else {
-            isRoundOver = false;
-            mCurrentRound = WildRound.getRound(mCurrentRound.getRoundNumber() + 1);
-            setTvCurrentRound(rootView);
-            btNextRound.setText(rootView.getContext().getString(R.string.round_over));
-            setRvCurrentPlayerScoresAdapter(rootView, isRoundOver);
+            if (mCurrentRound != WildRound.TWO) {
+                isRoundOver = false;
+                mCurrentRound = WildRound.getRound(mCurrentRound.getRoundNumber() + 1);
+                setTvCurrentRound(rootView);
+                btNextRound.setText(rootView.getContext().getString(R.string.round_over));
+                setRvCurrentPlayerScoresAdapter(rootView, isRoundOver);
+            } else {
+                Player winner = MainActivity.mPlayers.get(0);
+                for(int position = 1; position < MainActivity.mPlayers.size(); position++){
+                    Player positionPlayer = MainActivity.mPlayers.get(position);
+                    if(positionPlayer.getTotalScore() > winner.getTotalScore()){
+                        winner = positionPlayer;
+                    }
+                }
+
+                NewGameFrag fragment = NewGameFrag.newInstance(winner);
+                MainActivity.mPlayers = new ArrayList<>();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.main_frame, fragment)
+                        .addToBackStack(null)
+                        .commit();
+                }
+
+            }
         }
-    }
+
 
     private void setRvCurrentPlayerScoresAdapter(View rootView, boolean editTextsEnabled){
         PlayerScoreRecyclerAdapter adapter = new PlayerScoreRecyclerAdapter(rootView.getContext(), players, editTextsEnabled);

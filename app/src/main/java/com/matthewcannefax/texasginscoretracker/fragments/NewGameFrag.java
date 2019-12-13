@@ -39,13 +39,15 @@ public class NewGameFrag extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        if(getArguments().containsKey(MainActivity.WINNER_NAME_KEY)){
-//            isFreshGame = false;
-//            mWinnerName = (String)getArguments().get(MainActivity.WINNER_NAME_KEY);
-//
-//        }
+        if(getArguments().containsKey(MainActivity.WINNER_NAME_KEY)){
+            isFreshGame = false;
+            mWinnerName = (String)getArguments().get(MainActivity.WINNER_NAME_KEY);
+
+        }
 
         MainActivity.mCurrentFragment = MainActivity.NEW_GAME_FRAG_KEY;
+
+
     }
 
     @Override
@@ -79,7 +81,10 @@ public class NewGameFrag extends Fragment {
 
     //for starting a fresh game
     public static NewGameFrag newInstance(){
-        return new NewGameFrag();
+        NewGameFrag fragment = new NewGameFrag();
+        Bundle arguments = new Bundle();
+        fragment.setArguments(arguments);
+        return fragment;
     }
 
     //for starting a new game after finishing a game
