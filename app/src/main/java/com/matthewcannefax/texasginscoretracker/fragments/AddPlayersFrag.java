@@ -1,23 +1,30 @@
 package com.matthewcannefax.texasginscoretracker.fragments;
 
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.matthewcannefax.texasginscoretracker.MainActivity;
 import com.matthewcannefax.texasginscoretracker.R;
 import com.matthewcannefax.texasginscoretracker.adapters.AddedPlayersRecyclerAdapter;
+import com.matthewcannefax.texasginscoretracker.database.DataSource;
 import com.matthewcannefax.texasginscoretracker.model.Player;
 
 import java.util.ArrayList;
@@ -28,9 +35,13 @@ import java.util.ArrayList;
 public class AddPlayersFrag extends Fragment {
 
     private RecyclerView rvCurrentPlayers;
-    private EditText etNewPlayer;
+//    private EditText etNewPlayer;
+    private AutoCompleteTextView etNewPlayer;
+
     private Button btAdd;
     private Button btStart;
+
+    private DataSource mDataSource;
 
 //    private ArrayList<Player> players;
 
@@ -46,7 +57,7 @@ public class AddPlayersFrag extends Fragment {
 
 //        players = new ArrayList<>();
         MainActivity.mCurrentFragment = MainActivity.ADD_PLAYERS_FRAG_KEY;
-
+        mDataSource = new DataSource(MainActivity.mContext);
 
     }
 
@@ -75,11 +86,14 @@ public class AddPlayersFrag extends Fragment {
             @Override
             public void onClick(View view) {
                 if(!etNewPlayer.getText().equals("") && etNewPlayer.getText() != null){
-                    MainActivity.mPlayers.add(new Player(etNewPlayer.getText().toString()));
+                    String name = etNewPlayer.getText().toString();
+                    MainActivity.mPlayers.add(new Player(name));
+                    mDataSource.addNameToDB(name);
                     etNewPlayer.setText("");
                     AddedPlayersRecyclerAdapter adapter = new AddedPlayersRecyclerAdapter(rootView.getContext(), MainActivity.mPlayers);
                     rvCurrentPlayers.setAdapter(adapter);
                     rvCurrentPlayers.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
+
                 }
             }
         });
@@ -93,6 +107,30 @@ public class AddPlayersFrag extends Fragment {
                         .replace(R.id.main_frame, fragment)
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+
+        etNewPlayer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String name = mDataSource.getSpecificName(charSequence);
+
+                if (!name.equals("")) {
+                    String[] names = {name};
+                    ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(MainActivity.mContext, android.R.layout.simple_list_item_1, names);
+                    etNewPlayer.setAdapter(stringArrayAdapter);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
             }
         });
 

@@ -31,7 +31,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/start_game_button">
-        <EditText
+<!--        <EditText-->
+<!--            android:id="@+id/new_player_edittext"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight=".8"-->
+<!--            android:hint="@string/new_player"-->
+<!--            android:textSize="20sp"/>-->
+        <AutoCompleteTextView
             android:id="@+id/new_player_edittext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
